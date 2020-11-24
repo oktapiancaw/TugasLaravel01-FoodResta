@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+route::get('/restas', 'api\RestaController@index');
+route::post('/restas/store', 'api\RestaController@store');
+route::get('/restas/{id?}', 'api\RestaController@show');
+route::post('/restas/update', 'api\RestaController@update');
+route::delete('/restas/{id?}', 'api\RestaController@destroy');
+
+// Route::post('/v1/posts/store', 'api\v1\PostsController@store');
+// Route::middleware('auth:api')->get('/user', function (Request $request) {
+//     return $request->user();
+// });

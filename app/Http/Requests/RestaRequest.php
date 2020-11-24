@@ -30,4 +30,19 @@ class RestaRequest extends FormRequest
             'price' => 'required|integer|min:1000|max:10000000'
         ];
     }
+    public function messages()
+    {
+        return [
+            'name.required' => 'Please insert name of data!',
+            'type.required' => 'Please select type of data!',
+            'stock.required' => 'Please set stock of data!',
+            'stock.integer' => 'Please set stock correctly!',
+            'stock.min' => 'Minimum data is 1 piece',
+            'stock.max' => 'Maximum data is 1000 pieces',
+            'price.required' => 'Please set price of data!',
+            'price.integer' => 'Please set price correctly!',
+            'price.min' => 'Minimum price is Rp. 1000,00-',
+            'price.max' => 'Maximum price is Rp. 10.000.000,00-',
+        ];
+    }
 }

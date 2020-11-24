@@ -41,13 +41,6 @@ class RestaController extends Controller
     {
         return view('resta.create', ['resta' => new Resta()]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(RestaRequest $request)
     {
 
@@ -72,14 +65,6 @@ class RestaController extends Controller
     {
         return view('resta.edit', compact('resta'));
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Resta  $resta
-     * @return \Illuminate\Http\Response
-     */
     public function update(RestaRequest $request, Resta $resta)
     {
 
