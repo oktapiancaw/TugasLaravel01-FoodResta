@@ -11,13 +11,17 @@
         <div class="col-md-8">
             <div class="mb-1 d-flex justify-content-between align-items-center">
                 <h1>Data Resta</h1>
-                <a href="{{ route('resta.export') }}" class="btn btn-lg btn-outline-success"><i class='bx bx-export'></i> Export to Pdf</a>
             </div>
             <div class="card">
                 <div class="card-header">
                     <h5 class="my-0">Data List</h5>
                 </div>
                 <div class="card-body">
+                    <div class="button-action text-right" style="margin-bottom: 20px">
+                        <button type="button" class="btn btn-outline-info" data-toggle="modal" data-target="#import"><i class='bx bx-import mr-1'></i>Import Excel</button>
+                        <a href="{{ route('resta.exportExcel') }}" class="btn btn-outline-danger btn-md"><i class='bx bx-export mr-1'></i>Export Excel</a>
+                        <a href="{{ route('resta.export') }}" class="btn btn-outline-success"><i class='bx bx-export mr-1'></i> Export Pdf</a>
+                    </div>
                     @if($data_resta->count())
                     <table class="table">
                         <thead>
@@ -92,4 +96,5 @@
         @endif
     </div>
 </div>
+@include('resta.partials.modal')
 @endsection

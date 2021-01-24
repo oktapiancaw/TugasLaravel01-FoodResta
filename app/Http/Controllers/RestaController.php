@@ -3,8 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\RestaRequest;
+use App\Imports\RestaImport;
+use App\Exports\RestaExport;
 use App\Resta;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 use PDF;
 
 class RestaController extends Controller
@@ -17,6 +22,7 @@ class RestaController extends Controller
     public function index()
     {
         $data_resta = Resta::paginate(5);
+
         $data_info = array(
             'name' => "Data Resta",
             'total' => Resta::count(),
@@ -108,5 +114,39 @@ class RestaController extends Controller
         // return view('resta.export', compact('data_resta', 'data_info'));
         $pdf = PDF::loadview('resta/export', compact('data_resta', 'data_info'));
         return $pdf->download('DataResta.pdf');
+    }
+    public function import(Request $request)
+    {
+        $this->validate($request, [
+            'file' => 'required|mimes:csv,xls,xlsx'
+        ]);
+
+        $file = $request->file('file');
+
+        // membuat nama file unik
+        $nama_file = $file->hashName();
+
+        //temporary file
+        $path = $file->storeAs('public/excel/', $nama_file);
+
+        // import data
+        $import = Excel::import(new RestaImport(), storage_path('app/public/excel/' . $nama_file));
+
+        //remove from server
+        Storage::delete($path);
+
+        if ($import) {
+            //redirect
+            session()->flash('success', 'Data has been imported');
+            return redirect('/resta');
+        } else {
+            //redirect
+            session()->flash('error', 'Oops we have some trouble!');
+            return redirect('/resta');
+        }
+    }
+    public function exportExcel()
+    {
+        return Excel::download(new RestaExport(), 'Resta.xlsx');
     }
 }
